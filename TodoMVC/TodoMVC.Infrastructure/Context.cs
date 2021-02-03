@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TodoMVC.Domain.Model;
 
 namespace TodoMVC.Infrastructure
@@ -23,6 +27,28 @@ namespace TodoMVC.Infrastructure
                 .WithOne(i => i.TodoList)
                 .HasForeignKey(i => i.TodoListId)
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.Entity is BaseEntity
+                    && e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
+                }
+                else
+                {
+                    Entry((BaseEntity)entityEntry.Entity).Property(p => p.CreatedAt).IsModified = false;
+                }
+                ((BaseEntity)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }
