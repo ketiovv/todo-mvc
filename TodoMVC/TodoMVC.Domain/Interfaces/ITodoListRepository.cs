@@ -8,8 +8,8 @@ namespace TodoMVC.Domain.Interfaces
     {
         IQueryable<TodoList> GetAll();
         TodoList GetById(int id);
-        Task<int> InsertTodoItem(TodoList todoList);
-        Task DeleteTodoItem(int todoListId);
-        Task UpdateTodoItem(TodoList todoList);
+        Task<int> InsertTodoList(TodoList todoList);
+        Task DeleteTodoList(int todoListId);
+        Task UpdateTodoList(TodoList todoList);
     }
 }

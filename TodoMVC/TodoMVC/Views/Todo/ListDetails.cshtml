@@ -23,7 +23,11 @@
                 <td>@item.Task</td>
                 <td>@item.Description</td>
                 <td>@(item.DueDate.HasValue ? item.DueDate.Value.Date.ToShortDateString(): null)</td>
-                <td><a asp-action="EditItem" asp-route-id="@item.Id">Edit</a> | <a asp-action="DeleteItem" asp-route-id="@item.Id">Delete</a></td>
+                <td>
+                    <a asp-action="EditItem" asp-route-id="@item.Id">Edit</a>
+                    |
+                    <a asp-action="DeleteItem" asp-route-id="@item.Id">Delete</a>
+                </td>
             }
         </tr>
     </tbody>

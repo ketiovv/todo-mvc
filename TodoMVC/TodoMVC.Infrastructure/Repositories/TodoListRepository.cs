@@ -25,21 +25,21 @@ namespace TodoMVC.Infrastructure.Repositories
             return _context.TodoLists.FirstOrDefault(l => l.Id == id);
         }
 
-        public async Task<int> InsertTodoItem(TodoList todoList)
+        public async Task<int> InsertTodoList(TodoList todoList)
         {
             await _context.TodoLists.AddAsync(todoList);
             await _context.SaveChangesAsync();
             return todoList.Id;
         }
 
-        public async Task DeleteTodoItem(int todoListId)
+        public async Task DeleteTodoList(int todoListId)
         {
             var todoList = await _context.TodoLists.SingleOrDefaultAsync(l => l.Id == todoListId);
             _context.TodoLists.Remove(todoList);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateTodoItem(TodoList todoList)
+        public async Task UpdateTodoList(TodoList todoList)
         {
             _context.Update(todoList);
             await _context.SaveChangesAsync();
