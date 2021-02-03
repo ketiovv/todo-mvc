@@ -21,6 +21,7 @@ namespace TodoMVC.Controllers
             return View(model);
         }
 
+
         // GET: ListDetails/id
         public async Task<ActionResult> ListDetails(int id)
         {
@@ -28,13 +29,14 @@ namespace TodoMVC.Controllers
             return View(model);
         }
 
+
         // GET: CreateList
         public ActionResult CreateList()
         {
             return View();
         }
 
-        // POST: CreateItem
+        // POST: CreateList
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateList(IFormCollection collection, TodoListVm model)
@@ -49,6 +51,7 @@ namespace TodoMVC.Controllers
                 return View();
             }
         }
+
 
         // GET: CreateItem
         public async Task<ActionResult> CreateItem(int listId)
@@ -74,21 +77,47 @@ namespace TodoMVC.Controllers
             }
         }
 
-        // GET: Todo/Edit/5
+        // TODO
+        // GET: EditItem
         public ActionResult EditItem(int id)
         {
             return View();
         }
 
-        // POST: Todo/Edit/5
+        // TODO
+        // POST: EditItem
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditItem(int id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
 
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        // GET: EditList
+        public async Task<ActionResult> EditList(int id)
+        {
+            var model = await _service.GetTodoListById(id);
+            return View(model);
+        }
+
+        // POST: EditList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditList(IFormCollection collection, TodoListVm model)
+        {
+            try
+            {
+                await _service.UpdateTodoList(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -103,6 +132,7 @@ namespace TodoMVC.Controllers
             await _service.DeleteTodoItem(id);
             return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Delete list
         public async Task<ActionResult> DeleteList(int id)

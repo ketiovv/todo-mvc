@@ -4,6 +4,7 @@
 }
 
 <h1>List Details</h1>
+<a asp-action="EditList" asp-route-id="@Model.ListId" class="btn btn-warning">Edit list</a>
 <a asp-action="DeleteList" asp-route-id="@Model.ListId" class="btn btn-danger">Delete list</a>
 <a asp-action="CreateItem" asp-route-listId="@Model.ListId" class="btn btn-success">Create new item</a>
 <br />
