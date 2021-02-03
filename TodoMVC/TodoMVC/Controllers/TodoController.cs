@@ -97,11 +97,18 @@ namespace TodoMVC.Controllers
             }
         }
 
-        // GET: Todo/Delete/5
+        // GET: Delete item
         public async Task<ActionResult> DeleteItem(int id)
         {
             await _service.DeleteTodoItem(id);
-            return View();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Delete list
+        public async Task<ActionResult> DeleteList(int id)
+        {
+            await _service.DeleteTodoList(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
