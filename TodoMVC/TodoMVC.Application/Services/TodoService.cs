@@ -22,23 +22,44 @@ namespace TodoMVC.Application.Services
             _mapper = mapper;
         }
 
+        public async Task DeleteTodoItem(int todoItemId)
+        {
+            await _itemRepo.DeleteTodoItem(todoItemId);
+        }
+
+        public async Task DeleteTodoList(int todoListId)
+        {
+            await _listRepo.DeleteTodoList(todoListId);
+        }
+
+        public async Task<TodoItemListVm> GetAllTodoItems()
+        {
+            var items = await _itemRepo.GetAll()
+                                 .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
+                                 .ToListAsync();
+            return new TodoItemListVm()
+            {
+                Items = items,
+                Count = items.Count
+            };
+        }
 
         public async Task<TodoListListVm> GetAllTodoLists()
         {
             var lists = await _listRepo.GetAll()
-                .ProjectTo<TodoListVm>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                                 .ProjectTo<TodoListVm>(_mapper.ConfigurationProvider)
+                                 .ToListAsync();
             foreach (var list in lists)
             {
                 var items = await _itemRepo.GetTodoItemsForList(list.Id)
                     .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
                     .ToListAsync();
-                var todoItems = new TodoItemListVm()
+                var todoIems = new TodoItemListVm()
                 {
                     Items = items,
                     Count = items.Count
                 };
-                list.Items = todoItems;
+                list.Items = todoIems;
             }
             return new TodoListListVm()
             {
@@ -46,36 +67,7 @@ namespace TodoMVC.Application.Services
                 Count = lists.Count
             };
         }
-        public async Task<TodoListVm> GetTodoListById(int id)
-        {
-            var list = await _listRepo.GetAll().Where(p => p.Id == id)
-                .ProjectTo<TodoListVm>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync();
-            return list;
-        }
-        public async Task<int> InsertTodoList(TodoListVm todoList)
-        {
-            var list = _mapper.Map<TodoList>(todoList);
-            var id = await _listRepo.InsertTodoList(list);
-            return id;
-        }
-        public async Task DeleteTodoList(int todoListId)
-        {
-            await _listRepo.DeleteTodoList(todoListId);
-        }
 
-
-        public async Task<TodoItemListVm> GetAllTodoItems()
-        {
-            var items = await _itemRepo.GetAll()
-                .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-            return new TodoItemListVm()
-            {
-                Items = items,
-                Count = items.Count
-            };
-        }
         public async Task<TodoItemListVm> GetTodoItemsForList(int listId)
         {
             var items = await _itemRepo.GetTodoItemsForList(listId)
@@ -88,20 +80,39 @@ namespace TodoMVC.Application.Services
                 Count = items.Count
             };
         }
+
+        public async Task<TodoListVm> GetTodoListById(int id)
+        {
+            var list = await _listRepo.GetAll().Where(p => p.Id == id)
+                .ProjectTo<TodoListVm>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+            return list;
+        }
+
         public async Task<int> InsertTodoItem(TodoItemVm todoItem)
         {
             var item = _mapper.Map<TodoItem>(todoItem);
             var id = await _itemRepo.InsertTodoItem(item);
             return id;
         }
-        public async Task DeleteTodoItem(int todoItemId)
+
+        public async Task<int> InsertTodoList(TodoListVm todoList)
         {
-            await _itemRepo.DeleteTodoItem(todoItemId);
+            var list = _mapper.Map<TodoList>(todoList);
+            var id = await _listRepo.InsertTodoList(list);
+            return id;
         }
+
         public async Task UpdateTodoItem(TodoItemVm todoItem)
         {
             var item = _mapper.Map<TodoItem>(todoItem);
             await _itemRepo.UpdateTodoItem(item);
+        }
+
+        public async Task UpdateTodoList(TodoListVm todoList)
+        {
+            var list = _mapper.Map<TodoList>(todoList);
+            await _listRepo.UpdateTodoList(list);
         }
     }
 }

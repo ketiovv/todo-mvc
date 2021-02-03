@@ -7,9 +7,9 @@ namespace TodoMVC.Domain.Interfaces
     public interface ITodoListRepository
     {
         IQueryable<TodoList> GetAll();
-        TodoList GetById(int id);
+        TodoList GetListById(int id);
         Task<int> InsertTodoList(TodoList todoList);
-        Task DeleteTodoList(int todoListId);
+        Task DeleteTodoList(int todoListid);
         Task UpdateTodoList(TodoList todoList);
     }
 }

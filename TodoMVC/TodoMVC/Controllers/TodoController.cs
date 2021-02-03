@@ -21,20 +21,20 @@ namespace TodoMVC.Controllers
             return View(model);
         }
 
-        // GET: Todo/Details/5
+        // GET: ListDetails/id
         public async Task<ActionResult> ListDetails(int id)
         {
             var model = await _service.GetTodoItemsForList(id);
             return View(model);
         }
 
-        // GET: Todo/Create
+        // GET: CreateList
         public ActionResult CreateList()
         {
             return View();
         }
 
-        // POST: Todo/Create
+        // POST: CreateItem
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateList(IFormCollection collection, TodoListVm model)
@@ -42,7 +42,6 @@ namespace TodoMVC.Controllers
             try
             {
                 await _service.InsertTodoList(model);
-
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -51,13 +50,15 @@ namespace TodoMVC.Controllers
             }
         }
 
-        // GET: Todo/Create
-        public ActionResult CreateItem()
+        // GET: CreateItem
+        public async Task<ActionResult> CreateItem(int listId)
         {
-            return View();
+            var list = await _service.GetTodoListById(listId);
+            var model = new TodoItemVm() { TodoListId = list.Id, TodoListName = list.ListName };
+            return View(model);
         }
 
-        // POST: Todo/Create
+        // POST: CreateItem
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateItem(IFormCollection collection, TodoItemVm model)
@@ -65,8 +66,7 @@ namespace TodoMVC.Controllers
             try
             {
                 await _service.InsertTodoItem(model);
-
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ListDetails), new { id = model.TodoListId });
             }
             catch
             {

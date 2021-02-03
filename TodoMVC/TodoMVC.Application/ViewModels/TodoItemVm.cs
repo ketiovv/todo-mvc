@@ -12,16 +12,12 @@ namespace TodoMVC.Application.ViewModels
         public string Description { get; set; }
         public DateTime? DueDate { get; set; }
         public bool IsCompleted { get; set; }
-
         public int TodoListId { get; set; }
         public string TodoListName { get; set; }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TodoItem, TodoItemVm>()
-                .ForMember(d => d.TodoListName,
-                    opt
-                        => opt.MapFrom(s => s.TodoList.ListName)).ReverseMap();
+                .ForMember(d => d.TodoListName, opt => opt.MapFrom(s => s.TodoListName)).ReverseMap();
         }
     }
 }

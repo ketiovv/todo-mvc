@@ -6,6 +6,5 @@ namespace TodoMVC.Application.ViewModels
     {
         public List<TodoListVm> Lists { get; set; }
         public int Count { get; set; }
-
     }
 }

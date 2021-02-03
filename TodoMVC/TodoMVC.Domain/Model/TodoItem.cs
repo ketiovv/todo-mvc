@@ -8,8 +8,7 @@ namespace TodoMVC.Domain.Model
         public string Description { get; set; }
         public DateTime? DueDate { get; set; }
         public bool IsCompleted { get; set; }
-
         public int TodoListId { get; set; }
-        public TodoList TodoList { get; set; }
+        public string TodoListName { get; set; }
     }
 }

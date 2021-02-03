@@ -2,12 +2,14 @@
 @{ ViewData["Title"] = "Index"; }
 
 <h1>Todo</h1>
-
 @foreach (var list in Model.Lists)
 {
-    <a asp-action="ListDetails" asp-route-id="@list.Id" class="btn btn-primary">@list.ListName</a>
+    <a asp-action="ListDetails" asp-route-id="@list.Id" class="btn btn-secondary">@list.ListName</a>
 }
-<a asp-action="CreateList">Create new List</a>
+<a asp-action="CreateList" class="btn btn-success">+</a>
+
+<br />
+<br />
 
 <table class="table table-striped">
     <thead>
@@ -21,25 +23,23 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var list in Model.Lists)
+        @foreach (var list in Model.Lists)
+        {
+
+            @foreach (var item in list.Items.Items)
             {
-                @foreach (var item in list.Items.Items)
-                {
+                <tr>
                     <td><input asp-for="@item.IsCompleted" /></td>
                     <td>@item.Task</td>
                     <td>@item.Description</td>
-                    <td>@(item.DueDate.HasValue ? item.DueDate.Value.Date.ToShortDateString(): null)</td>
+                    <td>@(item.DueDate.HasValue ? item.DueDate.Value.Date.ToShortDateString() : null)</td>
                     <td>@list.ListName</td>
                     <td>
-                        <a asp-action="EditItem" asp-route-id="@item.Id">Edit</a> 
-                        | 
-                        <a asp-action="DeleteItem" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="EditItem" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="DeleteItem" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                     </td>
-
+                </tr>
                 }
-
-            }
-        </tr>
+        }
     </tbody>
 </table>
