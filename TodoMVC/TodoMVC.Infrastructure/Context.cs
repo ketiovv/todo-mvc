@@ -17,6 +17,12 @@ namespace TodoMVC.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<TodoList>()
+                .HasMany(l => l.TodoItems)
+                .WithOne(i => i.TodoList)
+                .HasForeignKey(i => i.TodoListId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
