@@ -9,6 +9,7 @@ namespace TodoMVC.Application.Interfaces
         Task<TodoListVm> GetTodoListById(int id);
         Task<TodoItemListVm> GetTodoItemsForList(int listId);
         Task<TodoItemListVm> GetAllTodoItems();
+        Task<TodoItemVm> GetTodoItemById(int id);
         Task<int> InsertTodoList(TodoListVm todoList);
         Task DeleteTodoList(int todoListId);
         Task<int> InsertTodoItem(TodoItemVm todoItem);

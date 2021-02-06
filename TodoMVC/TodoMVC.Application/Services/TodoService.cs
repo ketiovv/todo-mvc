@@ -68,6 +68,14 @@ namespace TodoMVC.Application.Services
             };
         }
 
+        public async Task<TodoItemVm> GetTodoItemById(int id)
+        {
+            return await _itemRepo.GetAll()
+                .Where(i => i.Id == id)
+                .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<TodoItemListVm> GetTodoItemsForList(int listId)
         {
             var items = await _itemRepo.GetTodoItemsForList(listId)

@@ -79,21 +79,21 @@ namespace TodoMVC.Controllers
 
         // TODO
         // GET: EditItem
-        public ActionResult EditItem(int id)
+        public async Task<ActionResult> EditItem(int id)
         {
-            return View();
+            var model =  await _service.GetTodoItemById(id);
+            return View(model);
         }
 
         // TODO
         // POST: EditItem
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(int id, IFormCollection collection)
+        public async Task<ActionResult> EditItem(int id, IFormCollection collection, TodoItemVm model)
         {
             try
             {
-                // TODO: Add update logic here
-
+                await _service.UpdateTodoItem(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
