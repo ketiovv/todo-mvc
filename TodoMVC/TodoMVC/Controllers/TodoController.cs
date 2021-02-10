@@ -77,15 +77,14 @@ namespace TodoMVC.Controllers
             }
         }
 
-        // TODO
+
         // GET: EditItem
         public async Task<ActionResult> EditItem(int id)
         {
-            var model =  await _service.GetTodoItemById(id);
+            var model = await _service.GetTodoItemById(id);
             return View(model);
         }
 
-        // TODO
         // POST: EditItem
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,6 +124,7 @@ namespace TodoMVC.Controllers
                 return View();
             }
         }
+
 
         // GET: Delete item
         public async Task<ActionResult> DeleteItem(int id)
