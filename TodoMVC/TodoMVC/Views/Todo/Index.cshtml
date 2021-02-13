@@ -30,7 +30,7 @@
             {
                 <tr>
                     <td>
-                        <form asp-action="UpdateIsDone" asp-route-id="@item.Id">
+                        <form asp-action="UpdateIsDone" asp-route-id="@item.Id" asp-route-pageName="@ViewData["Title"]">
                             <input id="updateCheckbox" onchange="this.form.submit()" asp-for="@item.IsCompleted"/>
                         </form>
                     </td>

@@ -23,7 +23,11 @@
         @foreach (var item in Model.Items)
         {
             <tr>
-                <td><input asp-for="@item.IsCompleted" /></td>
+                <td>
+                    <form asp-action="UpdateIsDone" asp-route-id="@item.Id" asp-route-pageName="@ViewData["Title"]">
+                        <input id="updateCheckbox" onchange="this.form.submit()" asp-for="@item.IsCompleted"/>
+                    </form>
+                </td>
                 <td>@item.Task</td>
                 <td>@item.Description</td>
                 <td>@(item.DueDate.HasValue ? item.DueDate.Value.Date.ToShortDateString(): null)</td>
