@@ -112,14 +112,9 @@ namespace TodoMVC.Controllers
             item.IsCompleted = !isDone;
             await _service.UpdateTodoItem(item);
 
-            if (pageName == nameof(Index))
-            {
-                return RedirectToAction(pageName);
-            }
-            else
-            {
-                return RedirectToAction(nameof(ListDetails), new { id = item.TodoListId });
-            }
+            return pageName == nameof(Index)
+                ? RedirectToAction(pageName)
+                : RedirectToAction(nameof(ListDetails), new { id = item.TodoListId });
         }
 
         // GET: EditList
