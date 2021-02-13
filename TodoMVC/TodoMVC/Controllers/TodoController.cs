@@ -102,6 +102,19 @@ namespace TodoMVC.Controllers
         }
 
 
+        // POST: Update IsDone
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateIsDone(int id, IFormCollection collection)
+        {
+            var item = await _service.GetTodoItemById(id);
+            var isDone = item.IsCompleted;
+            item.IsCompleted = !isDone;
+            await _service.UpdateTodoItem(item);
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: EditList
         public async Task<ActionResult> EditList(int id)
         {
