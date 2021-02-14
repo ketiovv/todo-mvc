@@ -24,6 +24,11 @@ namespace TodoMVC.Infrastructure.Repositories
             return _context.TodoLists;
         }
 
+        public IQueryable<TodoList> GetAllForUser(string id)
+        {
+            return _context.TodoLists.Where(p => p.ApplicationUserId == id);
+        }
+
         public TodoList GetListById(int id)
         {
             return _context.TodoLists.FirstOrDefault(p => p.Id == id);

@@ -37,7 +37,7 @@ namespace TodoMVC.Application.Services
             var items = await _itemRepo.GetAll()
                                  .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
                                  .ToListAsync();
-            return new TodoItemListVm()
+            return new()
             {
                 Items = items,
                 Count = items.Count
@@ -61,7 +61,33 @@ namespace TodoMVC.Application.Services
                 };
                 list.Items = todoIems;
             }
-            return new TodoListListVm()
+            return new()
+            {
+                Lists = lists,
+                Count = lists.Count
+            };
+        }
+
+        public async Task<TodoListListVm> GetAllTodoListsForUser(string id)
+        {
+            var lists = await _listRepo.GetAllForUser(id)
+                .ProjectTo<TodoListVm>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            foreach (var list in lists)
+            {
+                var items = await _itemRepo.GetTodoItemsForList(list.Id)
+                    .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+                var todoIems = new TodoItemListVm()
+                {
+                    Items = items,
+                    Count = items.Count
+                };
+                list.Items = todoIems;
+            }
+
+            return new()
             {
                 Lists = lists,
                 Count = lists.Count
@@ -81,7 +107,7 @@ namespace TodoMVC.Application.Services
             var items = await _itemRepo.GetTodoItemsForList(listId)
                 .ProjectTo<TodoItemVm>(_mapper.ConfigurationProvider)
                 .ToListAsync();
-            return new TodoItemListVm()
+            return new()
             {
                 ListId = listId,
                 Items = items,

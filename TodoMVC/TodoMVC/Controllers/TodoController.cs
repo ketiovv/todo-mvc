@@ -24,7 +24,7 @@ namespace TodoMVC.Controllers
         public async Task<ActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
-            var model = await _service.GetAllTodoLists();
+            var model = await _service.GetAllTodoListsForUser(userId);
             return View(model);
         }
 
