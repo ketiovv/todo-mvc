@@ -10,7 +10,9 @@ namespace TodoMVC.Application.ViewModels
         public int Id { get; set; }
         [DisplayName("Name")]
         public string ListName { get; set; }
+        public string ApplicationUserId { get; set; }
         public TodoItemListVm Items { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TodoList, TodoListVm>()

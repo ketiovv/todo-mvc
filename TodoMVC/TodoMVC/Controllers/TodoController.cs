@@ -50,6 +50,7 @@ namespace TodoMVC.Controllers
         {
             try
             {
+                model.ApplicationUserId = _userManager.GetUserId(User);
                 await _service.InsertTodoList(model);
                 return RedirectToAction(nameof(Index));
             }
