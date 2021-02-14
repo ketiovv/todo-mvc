@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TodoMVC.Domain.Model
 {
@@ -7,5 +8,7 @@ namespace TodoMVC.Domain.Model
         public string Name { get; set; }
 
         public ICollection<TodoItem> TodoItems { get; set; }
+        public Guid ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

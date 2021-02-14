@@ -22,6 +22,13 @@ namespace TodoMVC.Infrastructure
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.TodoLists)
+                .WithOne(l => l.ApplicationUser)
+                .HasForeignKey(l => l.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.Entity<TodoList>()
                 .HasMany(l => l.TodoItems)
                 .WithOne(i => i.TodoList)
