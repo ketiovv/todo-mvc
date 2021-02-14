@@ -1,22 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TodoMVC.Application.Interfaces;
 using TodoMVC.Application.ViewModels;
+using TodoMVC.Domain.Model;
 
 namespace TodoMVC.Controllers
 {
+    [Authorize]
     public class TodoController : Controller
     {
         private readonly ITodoService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TodoController(ITodoService todoService)
+        public TodoController(ITodoService todoService, UserManager<ApplicationUser> userManager)
         {
             _service = todoService;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Index()
         {
+            var userId = _userManager.GetUserId(User);
             var model = await _service.GetAllTodoLists();
             return View(model);
         }
