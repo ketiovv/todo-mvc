@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TodoMVC.Application;
+using TodoMVC.Domain.Model;
 using TodoMVC.Infrastructure;
 
 namespace TodoMVC
@@ -24,7 +24,8 @@ namespace TodoMVC
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                    options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<Context>();
 
             services.AddApplication();
