@@ -23,3 +23,7 @@ If you would like to use SQL Server, you will need to update **WebUI/appsettings
 Verify that the **DefaultConnection** connection string within **appsettings.json** points to a valid SQL Server instance. 
 
 When you run the application the database will be automatically created (if necessary) and the latest migrations will be applied.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
